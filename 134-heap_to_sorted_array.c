@@ -1,12 +1,12 @@
 #include "binary_trees.h"
 
 /**
- * count_h_nodes - Counts the number of nodes inside a tree
+ * count_nnodes - Counts the number of nodes inside a tree
  * @root: Pointer to tree's root node
  *
  * Return: Number of tree nodes
  */
-int count_h_nodes(binary_tree_t *root)
+int count_nnodes(binary_tree_t *root)
 {
 	if (!root)
 		return (0);
@@ -30,7 +30,7 @@ int *heap_to_sorted_array(heap_t *heap, size_t *size)
 	if (!heap)
 		return (NULL);
 
-	nodes = count_h_nodes(heap);
+	nodes = count_nnodes(heap);
 	arr = malloc(sizeof(*arr) * nodes);
 	if (!arr)
 		return (NULL);
