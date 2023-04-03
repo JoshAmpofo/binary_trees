@@ -29,16 +29,16 @@ int find_node(binary_tree_t *root, binary_tree_t *node)
  */
 int cross_check(binary_tree_t *root, binary_tree_t *node)
 {
-	int aux = 0;
+	int temp = 0;
 
 	if (root && node)
 	{
-		aux = find_node(root, node);
+		temp = find_node(root, node);
 		if (node->left)
-			aux &= cross_check(root, node->left);
+			temp &= cross_check(root, node->left);
 		if (node->right)
-			aux &= cross_check(root, node->right);
-		return (aux);
+			temp &= cross_check(root, node->right);
+		return (temp);
 	}
 	return (0);
 }
