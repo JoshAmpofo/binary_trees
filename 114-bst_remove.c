@@ -2,7 +2,7 @@
 
 bst_t *inorder_successor(bst_t *root);
 bst_t *bst_delete(bst_t *root, bst_t *node);
-bst_t *bst_remove_recursive(bst_t *root, bst_t *node, int value);
+bst_t *bst_remove_recurs(bst_t *root, bst_t *node, int value);
 bst_t *bst_remove(bst_t *root, int value);
 
 /**
@@ -29,7 +29,6 @@ bst_t *bst_delete(bst_t *root, bst_t *node)
 {
 	bst_t *parent = node->parent, *successor = NULL;
 
-	/* No children or right-child only */
 	if (node->left == NULL)
 	{
 		if (parent != NULL && parent->left == node)
@@ -42,7 +41,6 @@ bst_t *bst_delete(bst_t *root, bst_t *node)
 		return (parent == NULL ? node->right : root);
 	}
 
-	/* Left-child only */
 	if (node->right == NULL)
 	{
 		if (parent != NULL && parent->left == node)
@@ -55,7 +53,6 @@ bst_t *bst_delete(bst_t *root, bst_t *node)
 		return (parent == NULL ? node->left : root);
 	}
 
-	/* Two children */
 	successor = inorder_successor(node->right);
 	node->n = successor->n;
 
@@ -63,22 +60,22 @@ bst_t *bst_delete(bst_t *root, bst_t *node)
 }
 
 /**
- * bst_remove_recursive - Removes a node from a BST recursively.
+ * bst_remove_recurs - Removes a node from a BST recursively.
  * @root: A pointer to the root node of the BST to remove a node from.
  * @node: A pointer to the current node in the BST.
  * @value: The value to remove from the BST.
  *
  * Return: A pointer to the root node after deletion.
  */
-bst_t *bst_remove_recursive(bst_t *root, bst_t *node, int value)
+bst_t *bst_remove_recurs(bst_t *root, bst_t *node, int value)
 {
 	if (node != NULL)
 	{
 		if (node->n == value)
 			return (bst_delete(root, node));
 		if (node->n > value)
-			return (bst_remove_recursive(root, node->left, value));
-		return (bst_remove_recursive(root, node->right, value));
+			return (bst_remove_recurs(root, node->left, value));
+		return (bst_remove_recurs(root, node->right, value));
 	}
 	return (NULL);
 }
@@ -98,5 +95,5 @@ bst_t *bst_remove_recursive(bst_t *root, bst_t *node, int value)
  */
 bst_t *bst_remove(bst_t *root, int value)
 {
-	return (bst_remove_recursive(root, root, value));
+	return (bst_remove_recurs(root, root, value));
 }
