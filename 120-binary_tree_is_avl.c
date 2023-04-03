@@ -1,8 +1,7 @@
 #include "binary_trees.h"
-#include "limits.h"
 
 size_t height(const binary_tree_t *tree);
-int is_avl_helper(const binary_tree_t *tree, int lo, int hi);
+int is_avl_helper(const binary_tree_t *tree, int down, int up);
 int binary_tree_is_avl(const binary_tree_t *tree);
 
 /**
@@ -15,11 +14,11 @@ size_t height(const binary_tree_t *tree)
 {
 	if (tree)
 	{
-		size_t l = 0, r = 0;
+		size_t left = 0, right = 0;
 
-		l = tree->left ? 1 + height(tree->left) : 1;
-		r = tree->right ? 1 + height(tree->right) : 1;
-		return ((l > r) ? l : r);
+		left = tree->left ? 1 + height(tree->left) : 1;
+		right = tree->right ? 1 + height(tree->right) : 1;
+		return ((left > right) ? left : right);
 	}
 	return (0);
 }
@@ -27,26 +26,27 @@ size_t height(const binary_tree_t *tree)
 /**
  * is_avl_helper - Checks if a binary tree is a valid AVL tree.
  * @tree: A pointer to the root node of the tree to check.
- * @lo: The value of the smallest node visited thus far.
- * @hi: The value of the largest node visited this far.
+ * @down: The value of the smallest node visited thus far.
+ * @up: The value of the largest node visited this far.
  *
  * Return: If the tree is a valid AVL tree, 1, otherwise, 0.
  */
-int is_avl_helper(const binary_tree_t *tree, int lo, int hi)
+int is_avl_helper(const binary_tree_t *tree, int down, int up)
 {
-	size_t lhgt, rhgt, diff;
+	size_t l_height, r_height, diff;
 
 	if (tree != NULL)
 	{
-		if (tree->n < lo || tree->n > hi)
+		if (tree->n < down || tree->n > up)
 			return (0);
-		lhgt = height(tree->left);
-		rhgt = height(tree->right);
-		diff = lhgt > rhgt ? lhgt - rhgt : rhgt - lhgt;
+		l_height = height(tree->left);
+		r_height = height(tree->right);
+		diff = l_height > r_height ? l_height - r_height : 
+			r_height - l_height;
 		if (diff > 1)
 			return (0);
-		return (is_avl_helper(tree->left, lo, tree->n - 1) &&
-			is_avl_helper(tree->right, tree->n + 1, hi));
+		return (is_avl_helper(tree->left, down, tree->n - 1) &&
+			is_avl_helper(tree->right, tree->n + 1, up));
 	}
 	return (1);
 }
