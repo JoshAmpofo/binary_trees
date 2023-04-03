@@ -2,9 +2,9 @@
 
 /**
  * height - measures the height of a tree
- * @tree: tree root
+ * @tree: pointer to tree root whose height is been measured
  *
- * Return: height
+ * Return: height of tree
  */
 int height(const binary_tree_t *tree)
 {
@@ -25,7 +25,7 @@ int height(const binary_tree_t *tree)
 
 /**
  * binary_tree_is_perfect - checks if a binary tree is perfect
- * @tree: tree root
+ * @tree: pointer to tree root been checked for perfection
  *
  * Return: 1 if tree is perfect, 0 otherwise
  */
@@ -51,13 +51,13 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 }
 
 /**
- * swap - swaps nodes when child is greater than parent
+ * swap_node - swaps nodes when child is greater than parent
  * @arg_node: parent node
  * @arg_child: child node
  *
  * Return: void
  */
-void swap(heap_t **arg_node, heap_t **arg_child)
+void swap_node(heap_t **arg_node, heap_t **arg_child)
 {
 	heap_t *node, *child, *node_child, *node_left, *node_right, *parent;
 	int left_right;
@@ -128,14 +128,14 @@ heap_t *heap_insert(heap_t **root, int value)
 		if ((*root)->left)
 		{
 			new_node = heap_insert(&((*root)->left), value);
-			swap(root, &((*root)->left));
+			swap_node(root, &((*root)->left));
 			return (new_node);
 		}
 		else
 		{
 			new_node = (*root)->left
 				= binary_tree_node(*root, value);
-			swap(root, &((*root)->left));
+			swap_node(root, &((*root)->left));
 			return (new_node);
 		}
 	}
@@ -143,13 +143,13 @@ heap_t *heap_insert(heap_t **root, int value)
 	if ((*root)->right)
 	{
 		new_node = heap_insert(&((*root)->right), value);
-		swap(root, (&(*root)->right));
+		swap_node(root, (&(*root)->right));
 		return (new_node);
 	}
 	else
 	{
 		new_node = (*root)->right = binary_tree_node(*root, value);
-		swap(root, &((*root)->right));
+		swap_node(root, &((*root)->right));
 		return (new_node);
 	}
 
