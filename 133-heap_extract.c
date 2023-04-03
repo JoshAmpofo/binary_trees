@@ -50,28 +50,28 @@ void bubble_down(heap_t *parent)
 
 
 /**
- * get_parent - Finds the parent node for a certain node
- * @root: Pointer to heap's node
- * @index: Index of the current node
- * @pind: Index been searched
+ * get_parent - finds the parent node for a certain node
+ * @root: pointer to heap's node
+ * @idx: pointer to index of the current node
+ * @sidx: pointer to index been searched
  *
- * Return: Pointer to heap's node
+ * Return: pointer to heap's node
  */
-heap_t *get_parent(heap_t *root, int index, int pind)
+heap_t *get_parent(heap_t *root, int idx, int sidx)
 {
 	heap_t *left = NULL, *right = NULL;
 
-	if (!root || index > pind)
+	if (!root || idx > sidx)
 		return (NULL);
 
-	if (index == pind)
+	if (idx == sidx)
 		return (root);
 
-	left = get_parent(root->left, index * 2 + 1, pind);
+	left = get_parent(root->left, idx * 2 + 1, sidx);
 	if (left)
 		return (left);
 
-	right = get_parent(root->right, index * 2 + 2, pind);
+	right = get_parent(root->right, idx * 2 + 2, sidx);
 	if (right)
 		return (right);
 
@@ -80,9 +80,9 @@ heap_t *get_parent(heap_t *root, int index, int pind)
 
 
 /**
- * remove_last_node - Removes the last node of a heap
- * @root: Double pointer to heap's root node
- * @parent: Pointer to parent node from which to remove the last node
+ * remove_last_node - removes the last node of a heap
+ * @root: double pointer to heap's root node
+ * @parent: pointer to parent node from which to remove the last node
  *
  * Return: void
  */
@@ -114,8 +114,8 @@ void remove_last_node(heap_t **root, heap_t *parent)
 
 
 /**
- * heap_extract - Extracts the root node of a MBH
- * @root: Double pointer to the root node of heap
+ * heap_extract - extracts the root node of a MBH
+ * @root: double pointer to the root node of heap
  *
  * Return: value stored in the root node. 0 if failure
  *
@@ -125,7 +125,7 @@ void remove_last_node(heap_t **root, heap_t *parent)
  */
 int heap_extract(heap_t **root)
 {
-	int nodes, pind = 0, max_val = 0;
+	int nodes, sidx = 0, max_val = 0;
 	heap_t *parent;
 
 	if (!root || !(*root))
@@ -134,8 +134,8 @@ int heap_extract(heap_t **root)
 	max_val = (*root)->n;
 	nodes = count_heap_nodes(*root);
 
-	pind = (nodes - 2) / 2;
-	parent = get_parent(*root, 0, pind);
+	sidx = (nodes - 2) / 2;
+	parent = get_parent(*root, 0, sidx);
 
 	remove_last_node(root, parent);
 
