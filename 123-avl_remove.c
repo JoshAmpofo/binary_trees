@@ -1,34 +1,34 @@
 #include "binary_trees.h"
 
 /**
- * bal - Measures balance factor of a AVL
+ * bal_factor - Measures balance factor of a AVL
  * @tree: tree to go through
  *
  * Return: balanced factor
  */
-void bal(avl_t **tree)
+void bal_factor(avl_t **tree)
 {
-	int bval;
+	int bal_val;
 
 	if (tree == NULL || *tree == NULL)
 		return;
 	if ((*tree)->left == NULL && (*tree)->right == NULL)
 		return;
-	bal(&(*tree)->left);
-	bal(&(*tree)->right);
-	bval = binary_tree_balance((const binary_tree_t *)*tree);
-	if (bval > 1)
+	bal_factor(&(*tree)->left);
+	bal_factor(&(*tree)->right);
+	bal_val = binary_tree_balance((const binary_tree_t *)*tree);
+	if (bal_val > 1)
 		*tree = binary_tree_rotate_right((binary_tree_t *)*tree);
-	else if (bval < -1)
+	else if (bal_val < -1)
 		*tree = binary_tree_rotate_left((binary_tree_t *)*tree);
 }
 /**
- * successor - get the next successor in the right subtree
+ * get_successor - get the next successor in the right subtree
  * @node: tree to check
  *
  * Return: the min value of this tree
  */
-int successor(bst_t *node)
+int get_successor(bst_t *node)
 {
 	int left = 0;
 
@@ -38,7 +38,7 @@ int successor(bst_t *node)
 	}
 	else
 	{
-		left = successor(node->left);
+		left = get_successor(node->left);
 		if (left == 0)
 		{
 			return (node->n);
@@ -136,6 +136,6 @@ avl_t *avl_remove(avl_t *root, int value)
 
 	if (root_a == NULL)
 		return (NULL);
-	bal(&root_a);
+	bal_factor(&root_a);
 	return (root_a);
 }
